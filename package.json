@@ -1,0 +1,16 @@
+{
+  "name": "cracktcha",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": ">=4.2.2 "
+  },
+  "dependencies": {
+    "node-tesseract" : "0.2.7",
+    "jimp" : "0.2.21",
+    "winston": "1.1.2"
+  },
+  "scripts": {
+    "start": "node src/app.js"
+  }
+}

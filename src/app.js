@@ -11,6 +11,15 @@ const TESSERACT_DIR          = 'C:\\tesseract',
       REPORT_CAPTCHA_SCALE   = 3,
       START_TIME   = new Date().getTime();
 
+// Test Captchas
+const TEST_CAPTCHA_LOCAL = {
+       solution: "PLFERW", url: path.join(__dirname, "..", "input.png")
+      },
+      TEST_CAPTCHA_WEB = {
+       solution: "JGGBVC", url: "https://www.reddit.com/captcha/Y1GE8H32Q5SOTi9QWGlfHwevrfNSZMyd.png"
+      },
+      TEST_CAPTCHA = TEST_CAPTCHA_LOCAL;
+
 new OCR (WHITELIST_CHARS).then((ocr) => {
  getCaptcha().then((captcha) => {
   jimp.read(captcha)
@@ -24,20 +33,11 @@ new OCR (WHITELIST_CHARS).then((ocr) => {
 
 /* Called once everything is done */
 function done () {
- console.log("done!");
+ logger.info("done!");
 }
 
 /* Return a url for the captcha to solve */
 function getCaptcha() {
- // Test Captchas
- const TEST_CAPTCHA_LOCAL = {
-  solution: "PLFERW", url: path.join(__dirname, "..", "input.png")
- },
- TEST_CAPTCHA_WEB   = {
-  solution: "JGGBVC", url: "https://www.reddit.com/captcha/Y1GE8H32Q5SOTi9QWGlfHwevrfNSZMyd.png"
- },
- TEST_CAPTCHA = TEST_CAPTCHA_LOCAL;
- 
  return new Promise((resolve) => {
   resolve(TEST_CAPTCHA.url);
  });
@@ -61,18 +61,16 @@ function processImg (img) {
     img.setPixelColor(c, x, y);
    }
   }
-
   resolve(img);
  });
 }
-
 
 /* Write the processed image to our output dir */
 function writeImg (img) {
  return new Promise ((resolve) => {
   img.write(OUT_FILE, resolve)
      .scale(REPORT_CAPTCHA_SCALE)
-     .write(path.join(__dirname, '/../output.png'));
+     .write(path.join(__dirname, '\\..\\report\\output.png'));
  });
 }
 
@@ -106,7 +104,7 @@ function OCR (whitelistChars) {
 /* Output the string */
 function writeReport (solvedText) {
  return new Promise((resolve) => {
-  const REPORT_FILE = path.join(__dirname, '/../output.html');
+  const REPORT_FILE = path.join(__dirname, '\\..\\report\\output.html');
 
   var html = getReportHtml (OUT_FILE, solvedText, 0);
   fs.writeFile(REPORT_FILE, html, resolve);

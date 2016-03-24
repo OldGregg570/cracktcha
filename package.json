@@ -6,11 +6,19 @@
     "node": ">=4.2.2 "
   },
   "dependencies": {
-    "node-tesseract" : "0.2.7",
-    "jimp" : "0.2.21",
+    "node-tesseract": "0.2.7",
+    "jimp": "0.2.21",
     "winston": "1.1.2"
   },
+  "watch" : {
+    "start" : "src/*.js"
+  },
   "scripts": {
-    "start": "node src/app.js"
+    "start": "node src/app.js",
+    "watch": "npm-watch"
+  },
+
+  "devDependencies": {
+    "npm-watch": "0.1.1"
   }
 }

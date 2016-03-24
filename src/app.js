@@ -9,17 +9,7 @@ const TESSERACT_DIR          = 'C:\\tesseract',
       OUT_FILE               = path.join(TESSERACT_DIR, 'output.png'),
       WHITELIST_CHARS        = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
       REPORT_CAPTCHA_SCALE   = 3,
-
-      // Test Captchas
-      TEST_CAPTCHA_LOCAL = {
-       solution: "PLFERW", url: path.join(__dirname, "..", "input.png")
-      },
-      TEST_CAPTCHA_WEB   = {
-       solution: "JGGBVC", url: "https://www.reddit.com/captcha/Y1GE8H32Q5SOTi9QWGlfHwevrfNSZMyd.png"
-      },
-      TEST_CAPTCHA = TEST_CAPTCHA_LOCAL;
-
-var start = new Date().getTime();
+      START_TIME   = new Date().getTime();
 
 new OCR (WHITELIST_CHARS).then((ocr) => {
  getCaptcha().then((captcha) => {
@@ -32,11 +22,22 @@ new OCR (WHITELIST_CHARS).then((ocr) => {
  });
 });
 
+/* Called once everything is done */
 function done () {
  console.log("done!");
 }
 
+/* Return a url for the captcha to solve */
 function getCaptcha() {
+ // Test Captchas
+ const TEST_CAPTCHA_LOCAL = {
+  solution: "PLFERW", url: path.join(__dirname, "..", "input.png")
+ },
+ TEST_CAPTCHA_WEB   = {
+  solution: "JGGBVC", url: "https://www.reddit.com/captcha/Y1GE8H32Q5SOTi9QWGlfHwevrfNSZMyd.png"
+ },
+ TEST_CAPTCHA = TEST_CAPTCHA_LOCAL;
+ 
  return new Promise((resolve) => {
   resolve(TEST_CAPTCHA.url);
  });
@@ -60,8 +61,6 @@ function processImg (img) {
     img.setPixelColor(c, x, y);
    }
   }
-
-
 
   resolve(img);
  });
@@ -114,13 +113,14 @@ function writeReport (solvedText) {
  });
 }
 
+/* Return the html string for the cracktcha report */
 function getReportHtml (outFile, solvedText, timeElapsed) {
  var elements = [];
  elements.push(`<h1>Processed Captcha (${REPORT_CAPTCHA_SCALE}x Size):</h1>`);
  elements.push(`<img src="./output.png"/>`);
  elements.push(`<h1>Solved Text: ${solvedText}</h1>`);
  elements.push(`<h1>Actual Solution: ${TEST_CAPTCHA.solution}</h1>`);
- elements.push(`<h1>Time Elapsed: ${new Date().getTime() - start}ms</h1>`);
+ elements.push(`<h1>Time Elapsed: ${new Date().getTime() - START_TIME}ms</h1>`);
 
  // Ensure that LivePage chrome extension will notice a html change
  elements.push(`<p style="display:none;">${Math.random()}</p>`);

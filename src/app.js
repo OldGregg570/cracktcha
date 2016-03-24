@@ -121,6 +121,8 @@ function getReportHtml (outFile, solvedText, timeElapsed) {
  elements.push(`<h1>Solved Text: ${solvedText}</h1>`);
  elements.push(`<h1>Actual Solution: ${TEST_CAPTCHA.solution}</h1>`);
  elements.push(`<h1>Time Elapsed: ${new Date().getTime() - start}ms</h1>`);
+
+ // Ensure that LivePage chrome extension will notice a html change
  elements.push(`<p style="display:none;">${Math.random()}</p>`);
  return elements.join('\n');
 }

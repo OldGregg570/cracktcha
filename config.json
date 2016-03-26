@@ -2,5 +2,8 @@
  "tesseractDir" : "C:\\tesseract",
  "testCaptchaWeb" : {
   "url" : "https://www.reddit.com/captcha/Y1GE8H32Q5SOTi9QWGlfHwevrfNSZMyd.png"
+ },
+ "testCaptchaLocal" : {
+  "url" : "D:\\cracktcha\\input.png"
  }
 }
